@@ -12,12 +12,19 @@
             padding: 20px;
         }
 
-        /* Container for both buttons */
+        /* Container for the buttons */
         .button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
+        }
+
+        /* Container for the Repeat and New Generate buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* 20px space between buttons */
         }
 
         /* Style for the Generate button */
@@ -34,11 +41,10 @@
             color: white;
             font-weight: bold;
             text-shadow: 1px 1px 2px black;
-            margin-bottom: 20px; /* Adds space between buttons */
+            margin-bottom: 20px;
             position: relative;
         }
 
-        /* Style for the text inside the Generate button */
         .generate-button span {
             position: absolute;
             top: 50%;
@@ -51,9 +57,8 @@
             text-align: center;
         }
 
-        /* Style for the Repeat button */
-        .repeat-button {
-            margin-top: 25px;
+        /* Style for the New Generate and Repeat buttons */
+        .small-button {
             padding: 10px 20px;
             font-size: 18px;
             background-color: #4CAF50;
@@ -63,7 +68,7 @@
             cursor: pointer;
         }
 
-        .repeat-button:hover {
+        .small-button:hover {
             background-color: #45a049;
         }
 
@@ -84,21 +89,26 @@
 <body>
     <h1>Random Hebrew Number Generator</h1>
     
-    <!-- Container for both buttons to make them stack vertically -->
     <div class="button-container">
-        <!-- Button to generate a random number -->
+        <!-- First Generate button -->
         <button class="generate-button" onclick="generateRandomNumber()">
             <span>Generate</span>
         </button>
 
-    <!-- Div for displaying the generated number in numeric and Hebrew form -->
-    <div class="number-display">
-        <span id="numeric-number" class="numeric"></span> <!-- Numeric number will be shown here -->
-        <span id="hebrew-number" class="hebrew"></span> <!-- Hebrew number will be shown here -->
-    </div>
+        <!-- Display for generated numbers -->
+        <div class="number-display">
+            <span id="numeric-number" class="numeric"></span>
+            <span id="hebrew-number" class="hebrew"></span>
+        </div>
 
-      <!-- Button to repeat the last generated number -->
-      <button class="repeat-button" onclick="repeatNumber()">Repeat</button>
+        <!-- Container for New Generate and Repeat buttons with 20px space -->
+        <div class="action-buttons">
+            <!-- New Generate button -->
+            <button class="small-button" onclick="generateNewRandomNumber()">New Generate</button>
+
+            <!-- Repeat button -->
+            <button class="small-button" onclick="repeatNumber()">Repeat</button>
+        </div>
     </div>
 
     <script src="app.js"></script>

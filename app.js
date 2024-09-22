@@ -6,13 +6,30 @@ async function generateRandomNumber() {
     // Update the number display with the numeric value
     document.getElementById('numeric-number').innerText = randomNumber;
 
-    // Convert the number to Hebrew words or fall back to translation
+    // Convert the number to Hebrew words
     const numberInHebrew = await customNumberToHebrew(randomNumber); // Await the result
 
     // Store the last generated Hebrew number for repeat functionality
     lastGeneratedHebrew = numberInHebrew;
 
-    readAloud(numberInHebrew); // Pass the Hebrew version for reading aloud
+    // Update the Hebrew number display and read aloud
+    readAloud(numberInHebrew);
+}
+
+async function generateNewRandomNumber() {
+    const randomNumber = Math.floor(Math.random() * 3000); // Generate a number between 0 and 2999
+
+    // Update the number display with the numeric value
+    document.getElementById('numeric-number').innerText = randomNumber;
+
+    // Convert the number to Hebrew words
+    const numberInHebrew = await customNumberToHebrew(randomNumber); // Await the result
+
+    // Store the last generated Hebrew number for repeat functionality
+    lastGeneratedHebrew = numberInHebrew;
+
+    // Update the Hebrew number display and read aloud
+    readAloud(numberInHebrew);
 }
 
 function repeatNumber() {
