@@ -9,6 +9,10 @@ function generateRandomNumber() {
 async function readAloud(number) {
     const translatedText = await translateToHebrew(number);
     const utterance = new SpeechSynthesisUtterance(translatedText);
+
+    // Set the language to Hebrew
+    utterance.lang = 'he-IL';
+
     speechSynthesis.speak(utterance);
 }
 
