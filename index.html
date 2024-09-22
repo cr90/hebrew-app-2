@@ -4,13 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Hebrew Number Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Container for both buttons */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style for the Generate button */
+        .generate-button {
+            width: 225px;
+            height: 225px;
+            border-radius: 50%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg');
+            background-size: cover;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            font-size: 27px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+            margin-bottom: 20px; /* Adds space between buttons */
+            position: relative;
+        }
+
+        /* Style for the text inside the Generate button */
+        .generate-button span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 27px;
+            color: goldenrod;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        /* Style for the Repeat button */
+        .repeat-button {
+            margin-top: 25px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .repeat-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the number display */
+        .number-display {
+            margin-top: 20px;
+            font-size: 40px;
+        }
+
+        .numeric, .hebrew {
+            display: block;
+            font-size: 60px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Random Hebrew Number Generator</h1>
-    <div>
-        <button onclick="generateRandomNumber()">Generate Random Number</button>
-        <p id="number-display">Number: </p>
+    
+    <!-- Container for both buttons to make them stack vertically -->
+    <div class="button-container">
+        <!-- Button to generate a random number -->
+        <button class="generate-button" onclick="generateRandomNumber()">
+            <span>Generate</span>
+        </button>
+
+    <!-- Div for displaying the generated number in numeric and Hebrew form -->
+    <div class="number-display">
+        <span id="numeric-number" class="numeric"></span> <!-- Numeric number will be shown here -->
+        <span id="hebrew-number" class="hebrew"></span> <!-- Hebrew number will be shown here -->
     </div>
+
+      <!-- Button to repeat the last generated number -->
+      <button class="repeat-button" onclick="repeatNumber()">Repeat</button>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
