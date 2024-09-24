@@ -105,31 +105,44 @@ function manualNumberToHebrew(number) {
     return words.trim();
 }
 
+// Add this to handle numbers between 11 and 19
+const teens = ["", "אחת עשרה", "שתיים עשרה", "שלוש עשרה", "ארבע עשרה", "חמש עשרה", "שש עשרה", "שבע עשרה", "שמונה עשרה", "תשע עשרה"];
+
 // Function to convert numbers to English words (0-999)
-function numberToWords(number) {
-    const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    const teens = ["eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-    const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-    const hundreds = ["", "one hundred", "two hundred", "three hundred", "four hundred", "five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred"];
+function manualNumberToHebrew(number) {
+    const ones = ["", "אחת", "שתיים", "שלוש", "ארבע", "חמש", "שש", "שבע", "שמונה", "תשע"];
+    const tens = ["", "עשר", "עשרים", "שלושים", "ארבעים", "חמישים", "שישים", "שבעים", "שמונים", "תשעים"];
+    const hundreds = ["", "מאה", "מאתיים", "שלוש מאות", "ארבע מאות", "חמש מאות", "שש מאות", "שבע מאות", "שמונה מאות", "תשע מאות"];
+    const thousands = ["", "אלף", "אלפיים", "שלושת אלפים"];
 
     let words = "";
+
+    if (number >= 1000) {
+        words += thousands[Math.floor(number / 1000)] + " ";
+        number %= 1000;
+    }
 
     if (number >= 100) {
         words += hundreds[Math.floor(number / 100)] + " ";
         number %= 100;
     }
 
+    // Handle numbers between 11 and 19 separately
     if (number >= 11 && number <= 19) {
-        words += teens[number - 11] + " ";
-    } else {
-        if (number >= 10) {
-            words += tens[Math.floor(number / 10)] + " ";
-            number %= 10;
-        }
+        words += teens[number - 10];
+        return words.trim(); // Return early since it's a special case
+    }
 
-        if (number > 0) {
-            words += ones[number] + " ";
+    if (number >= 20) {
+        words += tens[Math.floor(number / 10)] + " ";
+        number %= 10;
+    }
+
+    if (number > 0) {
+        if (words) {
+            words += " ו"; // Insert 'ו' (ve) before the last part for correct pronunciation
         }
+        words += ones[number];
     }
 
     return words.trim();
