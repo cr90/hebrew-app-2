@@ -66,7 +66,7 @@ async function customNumberToHebrew(number) {
         return manualNumberToHebrew(number); // Use manual conversion for these ranges
     } else {
         // For 0-999 and other numbers, convert to words in English and then translate to Hebrew
-        const numberInWords = numberToWords(number); // Convert number to English words
+        const numberInWords = number.toString(); // Convert the number to a string
         return await translateToHebrew(numberInWords); // Translate the English words to Hebrew
     }
 }
