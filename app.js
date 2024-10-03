@@ -1,7 +1,38 @@
 let lastGeneratedHebrew = null; // Variable to store the last generated Hebrew translation
+let maxRange = 100; // Default range is 1-100
+
+// Function to handle active button state
+function setActiveButton(button) {
+    // Remove 'active' class from all buttons
+    document.querySelectorAll('.range-button').forEach(btn => {
+        btn.classList.remove('active'); // Remove active state from all buttons
+    });
+    // Add 'active' class to the clicked button
+    button.classList.add('active');
+}
+
+// Event listeners for range buttons
+document.getElementById('range-0-100').addEventListener('click', (event) => {
+    maxRange = 100;
+    alert("Range set to 1-100");
+    setActiveButton(event.target); // Set this button as active
+});
+
+document.getElementById('range-0-3000').addEventListener('click', (event) => {
+    maxRange = 3000;
+    alert("Range set to 1-3000");
+    setActiveButton(event.target); // Set this button as active
+});
+
+document.getElementById('range-0-10000').addEventListener('click', (event) => {
+    maxRange = 10000;
+    alert("Range set to 1-10000");
+    setActiveButton(event.target); // Set this button as active
+});
+
 
 async function generateRandomNumber() {
-    const randomNumber = Math.floor(Math.random() * 3000); // Generate a number between 0 and 2999
+    const randomNumber = Math.floor(Math.random() * maxRange) + 1; // Generate a number between 1 and the current maxRange
 
     // Update the number display with the numeric value
     document.getElementById('numeric-number').innerText = randomNumber;
@@ -17,7 +48,7 @@ async function generateRandomNumber() {
 }
 
 async function generateNewRandomNumber() {
-    const randomNumber = Math.floor(Math.random() * 3000); // Generate a number between 0 and 2999
+    const randomNumber = Math.floor(Math.random() * maxRange) + 1; // Generate a number between 1 and the current maxRange
 
     // Update the number display with the numeric value
     document.getElementById('numeric-number').innerText = randomNumber;
@@ -54,93 +85,69 @@ async function readAloud(hebrewWords) {
     speechSynthesis.speak(utterance);
 }
 
-// Custom function to handle special cases and fall back to translation for others
+/// Custom function to handle special cases and fall back to translation for others
 async function customNumberToHebrew(number) {
-    // Handle specific manual ranges
+    // Handle specific manual ranges or numbers less than or equal to 1000
     if (
+        number <= 10000 || // Handle all numbers up to 1000 manually
         (number >= 1001 && number <= 1009) || 
         (number >= 1020 && number <= 2000) || 
         (number >= 2001 && number <= 2009) || 
         (number >= 2020 && number <= 3000)
     ) {
+        console.log(`Using manualNumberToHebrew for number: ${number}`);
         return manualNumberToHebrew(number); // Use manual conversion for these ranges
     } else {
-        // For 0-999 and other numbers, convert to words in English and then translate to Hebrew
+        // For numbers outside of the above ranges, use Google Translate
         const numberInWords = number.toString(); // Convert the number to a string
+        console.log(`Using Google Translate for number: ${number}`);
         return await translateToHebrew(numberInWords); // Translate the English words to Hebrew
     }
 }
 
-// Function to manually convert numbers in the specified ranges
 function manualNumberToHebrew(number) {
     const ones = ["", "אחת", "שתיים", "שלוש", "ארבע", "חמש", "שש", "שבע", "שמונה", "תשע"];
     const tens = ["", "עשר", "עשרים", "שלושים", "ארבעים", "חמישים", "שישים", "שבעים", "שמונים", "תשעים"];
     const hundreds = ["", "מאה", "מאתיים", "שלוש מאות", "ארבע מאות", "חמש מאות", "שש מאות", "שבע מאות", "שמונה מאות", "תשע מאות"];
-    const thousands = ["", "אלף", "אלפיים", "שלושת אלפים"];
+    const thousands = ["", "אלף", "אלפיים", "שלושת אלפים", "ארבעת אלפים", "חמשת אלפים", "ששת אלפים", "שבעת אלפים", "שמונת אלפים", "תשעת אלפים", "עשרת אלפים"];
 
     let words = "";
 
+    // Handle thousands
     if (number >= 1000) {
         words += thousands[Math.floor(number / 1000)] + " ";
-        number %= 1000;
+        number %= 1000; // Process the remainder after removing the thousands part
     }
 
+    // Handle hundreds
     if (number >= 100) {
         words += hundreds[Math.floor(number / 100)] + " ";
-        number %= 100;
+        number %= 100; // Process the remainder after removing the hundreds part
     }
 
-    if (number >= 20) {
-        words += tens[Math.floor(number / 10)] + " ";
-        number %= 10;
-    }
-
-    if (number > 0) {
-        if (words) {
-            words += " ו"; // Insert 'ו' (and) before the last part to ensure "ve" pronunciation
-        }
-        words += ones[number];
-    }
-
-    return words.trim();
-}
-
-// Add this to handle numbers between 11 and 19
-const teens = ["", "אחת עשרה", "שתיים עשרה", "שלוש עשרה", "ארבע עשרה", "חמש עשרה", "שש עשרה", "שבע עשרה", "שמונה עשרה", "תשע עשרה"];
-
-// Function to convert numbers to English words (0-999)
-function manualNumberToHebrew(number) {
-    const ones = ["", "אחת", "שתיים", "שלוש", "ארבע", "חמש", "שש", "שבע", "שמונה", "תשע"];
-    const tens = ["", "עשר", "עשרים", "שלושים", "ארבעים", "חמישים", "שישים", "שבעים", "שמונים", "תשעים"];
-    const hundreds = ["", "מאה", "מאתיים", "שלוש מאות", "ארבע מאות", "חמש מאות", "שש מאות", "שבע מאות", "שמונה מאות", "תשע מאות"];
-    const thousands = ["", "אלף", "אלפיים", "שלושת אלפים"];
-
-    let words = "";
-
-    if (number >= 1000) {
-        words += thousands[Math.floor(number / 1000)] + " ";
-        number %= 1000;
-    }
-
-    if (number >= 100) {
-        words += hundreds[Math.floor(number / 100)] + " ";
-        number %= 100;
-    }
-
-    // Handle numbers between 11 and 19 separately
+    // Handle numbers between 11 and 19
     if (number >= 11 && number <= 19) {
+        const teens = ["", "אחת עשרה", "שתיים עשרה", "שלוש עשרה", "ארבע עשרה", "חמש עשרה", "שש עשרה", "שבע עשרה", "שמונה עשרה", "תשע עשרה"];
         words += teens[number - 10];
         return words.trim(); // Return early since it's a special case
     }
 
+    // Handle tens
     if (number >= 20) {
         words += tens[Math.floor(number / 10)] + " ";
         number %= 10;
     }
 
+    // Handle exact tens like 10
+    if (number === 10) {
+        words += "עשר";
+        return words.trim();
+    }
+
+    // Handle ones
     if (number > 0) {
         if (words) {
-            words += " ו"; // Insert 'ו' (ve) before the last part for correct pronunciation
+            words += " ו"; // Insert 'ו' (ve) for proper pronunciation
         }
         words += ones[number];
     }

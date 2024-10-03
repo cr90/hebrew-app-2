@@ -75,6 +75,26 @@
             background-color: #45a049;
         }
 
+        /* Style for the new range buttons */
+        .range-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .range-button:hover {
+            background-color: #0069d9;
+        }
+
+        /* Add a style for the active state */
+    .range-button.active {
+        background-color: #0016b3; /* Darker blue */
+    }
+
         /* Style for the number display */
         .number-display {
             margin-top: 20px;
@@ -91,8 +111,13 @@
     </style>
 </head>
 <body>
+     <!-- Add new buttons here for range selection -->
+     <div class="action-buttons">
+        <button class="range-button" id="range-0-100">100</button>
+        <button class="range-button" id="range-0-3000">3k</button>
+        <button class="range-button" id="range-0-10000">10k</button>
+    </div>
     <h1>Random Hebrew Number Generator</h1>
-    
     <div class="button-container">
         <!-- Display for generated numbers -->
         <div class="number-display">
