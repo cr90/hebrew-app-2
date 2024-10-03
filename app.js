@@ -1,5 +1,42 @@
 let lastGeneratedHebrew = null; // Variable to store the last generated Hebrew translation
 let maxRange = 100; // Default range is 1-100
+let autoplayInterval = null; // Variable to store the interval ID
+
+// Function to start autoplay
+function startAutoplay() {
+    const intervalTime = parseInt(document.getElementById('interval-time').value) * 1000; // Get interval time in milliseconds
+
+    if (isNaN(intervalTime) || intervalTime <= 0) {
+        alert("Please enter a valid interval time.");
+        return;
+    }
+
+    if (autoplayInterval) {
+        clearInterval(autoplayInterval); // Clear any existing autoplay
+    }
+
+    autoplayInterval = setInterval(() => {
+        generateNewRandomNumber(); // Generate a random number at each interval
+    }, intervalTime);
+
+    alert(`Autoplay started with a ${intervalTime / 1000} seconds interval.`);
+}
+
+// Function to stop autoplay
+function stopAutoplay() {
+    if (autoplayInterval) {
+        clearInterval(autoplayInterval); // Stop the autoplay
+        autoplayInterval = null;
+        alert("Autoplay stopped.");
+    } else {
+        alert("Autoplay is not running.");
+    }
+}
+
+// Event listeners for autoplay buttons
+document.getElementById('start-autoplay').addEventListener('click', startAutoplay);
+document.getElementById('stop-autoplay').addEventListener('click', stopAutoplay);
+
 
 // Function to handle active button state
 function setActiveButton(button) {
