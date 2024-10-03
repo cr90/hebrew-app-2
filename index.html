@@ -146,6 +146,11 @@
     background-color: #c0c0c0; /* Slightly darker grey on hover */
 }
 
+/* Darker grey color when autoplay is active */
+.active-autoplay {
+    background-color: #a9a9a9 !important; /* Darker grey for active state */
+}
+
 /* Add space between "New Generate" and "Repeat" buttons and the autoplay buttons */
 .button-container {
     margin-bottom: 40px; /* Add space between New/Repeat buttons and the autoplay section */
@@ -156,7 +161,7 @@
 <body>
      <!-- Add new buttons here for range selection -->
      <div class="action-buttons">
-        <button class="range-button" id="range-0-100">100</button>
+        <button class="range-button active" id="range-0-100">100</button>
         <button class="range-button" id="range-0-3000">3k</button>
         <button class="range-button" id="range-0-10000">10k</button>
     </div>

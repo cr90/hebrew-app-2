@@ -2,12 +2,28 @@ let lastGeneratedHebrew = null; // Variable to store the last generated Hebrew t
 let maxRange = 100; // Default range is 1-100
 let autoplayInterval = null; // Variable to store the interval ID
 
+// Function to handle active button state
+function setActiveButton(button) {
+    // Remove 'active' class from all buttons
+    document.querySelectorAll('.range-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    // Add 'active' class to the clicked button
+    button.classList.add('active');
+}
+
+// Automatically set the default active button on page load
+window.addEventListener('load', function() {
+    const defaultButton = document.getElementById('range-0-100'); // Assuming 100 is the default
+    setActiveButton(defaultButton); // Highlight the default button
+    maxRange = 100; // Set the default range logic to 100
+});
+
 // Function to start autoplay
 function startAutoplay() {
     const intervalTime = parseInt(document.getElementById('interval-time').value) * 1000; // Get interval time in milliseconds
 
     if (isNaN(intervalTime) || intervalTime <= 0) {
-        alert("Please enter a valid interval time.");
         return;
     }
 
@@ -19,7 +35,8 @@ function startAutoplay() {
         generateNewRandomNumber(); // Generate a random number at each interval
     }, intervalTime);
 
-    alert(`Autoplay started with a ${intervalTime / 1000} seconds interval.`);
+    // Change the "Start Autoplay" button to the darker grey
+    document.getElementById('start-autoplay').classList.add('active-autoplay');
 }
 
 // Function to stop autoplay
@@ -27,10 +44,9 @@ function stopAutoplay() {
     if (autoplayInterval) {
         clearInterval(autoplayInterval); // Stop the autoplay
         autoplayInterval = null;
-        alert("Autoplay stopped.");
-    } else {
-        alert("Autoplay is not running.");
-    }
+    } 
+        // Revert the "Start Autoplay" button back to the original light grey
+        document.getElementById('start-autoplay').classList.remove('active-autoplay');
 }
 
 // Event listeners for autoplay buttons
@@ -51,19 +67,16 @@ function setActiveButton(button) {
 // Event listeners for range buttons
 document.getElementById('range-0-100').addEventListener('click', (event) => {
     maxRange = 100;
-    alert("Range set to 1-100");
     setActiveButton(event.target); // Set this button as active
 });
 
 document.getElementById('range-0-3000').addEventListener('click', (event) => {
     maxRange = 3000;
-    alert("Range set to 1-3000");
     setActiveButton(event.target); // Set this button as active
 });
 
 document.getElementById('range-0-10000').addEventListener('click', (event) => {
     maxRange = 10000;
-    alert("Range set to 1-10000");
     setActiveButton(event.target); // Set this button as active
 });
 
@@ -105,7 +118,6 @@ function repeatNumber() {
         // If a Hebrew number was generated, repeat it
         readAloud(lastGeneratedHebrew);
     } else {
-        alert('No number has been generated yet!');
     }
 }
 
