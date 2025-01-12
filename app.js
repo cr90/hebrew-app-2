@@ -122,16 +122,32 @@ function repeatNumber() {
 }
 
 async function readAloud(hebrewWords) {
-    // Update the Hebrew number display
     document.getElementById('hebrew-number').innerText = hebrewWords;
 
-    const utterance = new SpeechSynthesisUtterance(hebrewWords);
+    try {
+        const utterance = new SpeechSynthesisUtterance(hebrewWords);
 
-    // Set the language to Hebrew
-    utterance.lang = 'he-IL';
+        // Set the language to Hebrew
+        utterance.lang = 'he-IL';
 
-    // Speak the text in Hebrew
-    speechSynthesis.speak(utterance);
+        // Get available voices
+        const voices = speechSynthesis.getVoices();
+
+        // Find a Hebrew voice
+        const hebrewVoice = voices.find(voice => voice.lang === 'he-IL');
+
+        // If a Hebrew voice is found, set it
+        if (hebrewVoice) {
+            utterance.voice = hebrewVoice;
+        } else {
+            console.warn('No Hebrew voice found. Using default voice.');
+        }
+
+        // Speak the text in Hebrew
+        speechSynthesis.speak(utterance);
+    } catch (error) {
+        console.error('Speech synthesis error:', error);
+    }
 }
 
 /// Custom function to handle special cases and fall back to translation for others
